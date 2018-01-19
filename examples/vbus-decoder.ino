@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>
-#include "vbusdecoder.h"
+#include <vbusdecoder.h>
 
 SoftwareSerial vbusSerial(8,9);  // RX, TX
 VBUSDecoder vbus(&vbusSerial);
