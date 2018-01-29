@@ -164,19 +164,20 @@ void VBUSDecoder::_receiveHandler() {
   if ((_rcvBufferIdx > 10) && (_frameCnt == 0)) {  
     _headerDecoder();
 
-    crc = _calcCRC(_rcvBuffer, 0, 9);
-
     // Only protocol 1.0 will be decoded
     if (_protocol != 1) {
       _state = SYNC;
       return; 
     }
+
+    crc = _calcCRC(_rcvBuffer, 0, 9);
       
     // if CRC fails go to ERROR state
     if (crc != 0) {
       _state = ERROR;
       return;
     }
+
     _errorFlag = false;
   }
 
@@ -202,7 +203,6 @@ void VBUSDecoder::_decodeHandler() {
 
   // Only packets carring comman 0x0100 - Master to slave are in focuse
   if (_cmd == 0x0100) {
-	Serial.println("cmd 100");
 
     switch (_srcAddr) {
       case 0x1060:  // Vitosolic 200
@@ -211,6 +211,7 @@ void VBUSDecoder::_decodeHandler() {
       defalut: // General RESOL device
       _defaultDecoder();
     }
+
     _readyFlag =  true;
     _state = SYNC;  
   }
